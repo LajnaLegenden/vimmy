@@ -1,0 +1,5 @@
+require("config.lazy")
+require("config.custom")
+require("config.options")
+require("config.keys")
+require("conf.pluginConfig")
