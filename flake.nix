@@ -14,19 +14,6 @@
         extraPackages = import ./packages.nix { inherit pkgs; };
       in
       {
-        packages.default = nvimWrapper;
-        
-        apps.default = {
-          type = "app";
-          program = "${nvimWrapper}/bin/nvim";
-        };
-
-        # Development shell with all dependencies
-        devShells.default = pkgs.mkShell {
-          buildInputs = [ nvimWrapper ] ++ extraPackages;
-        };
-
-        # Home Manager configuration
         homeManagerModules.default = { config, lib, pkgs, ... }: {
           home.packages = [ pkgs.neovim ] ++ extraPackages;
           
