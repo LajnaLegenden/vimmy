@@ -10,19 +10,8 @@
     flake-utils.lib.eachDefaultSystem (system:
       let
         pkgs = nixpkgs.legacyPackages.${system};
-        
         # Import the packages list
         extraPackages = import ./packages.nix { inherit pkgs; };
-        
-        # Create a wrapper script that sets up the config and runs neovim
-        nvimWrapper = pkgs.writeShellScriptBin "nvim" ''
-          export XDG_CONFIG_HOME="$HOME/.tmp/nvim-config"
-          # Add our tools to the PATH
-          export PATH="${pkgs.lib.makeBinPath extraPackages}:$PATH"
-          mkdir -p "$XDG_CONFIG_HOME"
-          cp -r ${./nvim} "$XDG_CONFIG_HOME/nvim"
-          exec ${pkgs.neovim}/bin/nvim "$@"
-        '';
       in
       {
         packages.default = nvimWrapper;
